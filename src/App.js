@@ -1,74 +1,58 @@
-import React, { useState } from "react";
+import React from 'react'
+import gonImage from './assets/images/gon-image.png';
+import killuaImage from './assets/images/killua-image.png';
+import kurapikaImage from './assets/images/kurapika-image.png';
+import leorioImage from './assets/images/leorio-image.png';
+import hisokaImage from './assets/images/hisoka-image.png';
+import { FaArrowRight } from "react-icons/fa6"; 
+import { IoIosFlash } from "react-icons/io";
 
-const App = () => {
-  const [billAmount, setBillAmount] = useState(0);
-  const [tipPercent, setTipPercent] = useState(15);
-  const [numberPeople, setNumberPeople] = useState(1);
 
-  const calculateTip = () => {
-    const tipAmount = billAmount * tipPercent / 100;
-    const totalAmount = billAmount + tipAmount;
-
-    return {
-      tipAmount,
-      totalAmount,
-    };
-  };
-
+export default function App() {
   return (
-    <div>
-      <h1>Tip Calculator</h1>
 
-      <div>
-        <label>Bill amount:</label>
-        <input
-          type="number"
-          value={billAmount}
-          onChange={(event) => setBillAmount(event.target.value)}
-        />
-      </div>
-
-      <div>
-        <label>Tip percentage:</label>
-        <select
-          value={tipPercent}
-          onChange={(event) => setTipPercent(event.target.value)}
-        >
-          <option value="15">15%</option>
-          <option value="20">20%</option>
-          <option value="25">25%</option>
-          <option value="30">30%</option>
-          <option value="35">35%</option>
-          <option value="40">40%</option>
-        </select>
-      </div>
-
-      <div>
-        <label>Number of people:</label>
-        <input
-          type="number"
-          value={numberPeople}
-          onChange={(event) => setNumberPeople(event.target.value)}
-        />
-      </div>
-
-      <div>
-      <h1 style={{ color: "red" }}>
-  ...
-</h1>
-        <p>
-          {calculateTip().tipAmount}
-        </p>
-      </div>
-
-      <div>
-        <h2>Total amount:</h2>
-        <p>
-          {calculateTip().totalAmount}
-        </p>
-      </div>
+    <div> 
+     <h1 className='text-center uppercase text-white mt-4 mb-2 flex items-center justify-center '> characters <IoIosFlash /> </h1> 
+   
+    <div className='  grid gap-4 grid-cols-3 grid-rows-2'>
+   
+    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
+      <img className=" w-60 " src={gonImage}  />
+       <p className='font-bold text-left ml-4 pt-2'>Gon Freecss</p>
+       <p className='text-left text-xs ml-4 pt-2 pb-2'>A young and talented hunter with a pure heart.</p>
+       <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more<FaArrowRight /> </button>
+      
     </div>
-  );
-};
+    
+    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
+      <img className=" w-60 " src={killuaImage} alt="" />
+      <p className='font-bold text-left ml-4 pt-2'>illua Zoldyck</p>
+      <p className='text-left text-xs ml-4 pt-2 pb-2'>From an assassin's family, Gon's best friend.</p>
+      <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more<FaArrowRight /> </button>
 
-export default App;
+    </div>
+    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
+       <img className=" w-60 " src={kurapikaImage} alt="" />
+       <p className='font-bold text-left ml-4 pt-2'>Kurapicka</p>
+       <p className='text-left text-xs ml-4 pt-2 pb-2'>The last survivor of the Kurta clan, seeking to avenge his family.</p>
+       <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more <FaArrowRight /></button>
+
+    </div>
+    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
+      <img className=" w-60 " src={leorioImage} alt="" />
+      <p className='font-bold text-left ml-4 pt-2'>Leorio Paradinight</p>
+      <p className='text-left text-xs ml-4 pt-2 pb-2'>An aspiring doctor, he aims to help others.</p>
+      <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more<FaArrowRight /> </button>
+
+    </div>
+    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
+      <img className=" w-60 " src={hisokaImage} alt="" />
+      <p className='font-bold text-left ml-4 pt-2'>Hisoka morrow</p>
+      <p className='text-left text-xs ml-4 pt-2 pb-2'>A mysterious and dangerous magician with his own agenda.</p>
+      <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more <FaArrowRight /></button>
+
+    </div>
+    </div>
+    </div>
+  )
+}
