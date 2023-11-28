@@ -1,58 +1,94 @@
-import React from 'react'
-import gonImage from './assets/images/gon-image.png';
-import killuaImage from './assets/images/killua-image.png';
-import kurapikaImage from './assets/images/kurapika-image.png';
-import leorioImage from './assets/images/leorio-image.png';
-import hisokaImage from './assets/images/hisoka-image.png';
-import { FaArrowRight } from "react-icons/fa6"; 
-import { IoIosFlash } from "react-icons/io";
+import { useState } from 'react';
+import TaskItem from './components/TaskItem';
+//import logo from './assets/images/logo.png';
 
+function App() {
+  // 1 er sera la valeur de votre state
+  // 2e sera la fonction qui permet de mettre à jour le state
+  // TOUJOURS LE DÉCLARER AU TOP DE LA FONCTION 💥
+  const [textEntered, setTextEntered] = useState('');
+  const [tasks, setTasks] = useState([]);
 
-export default function App() {
+  const onChangeHandler = function (event) {
+    // event.target => document.querySelector('input)
+    // `event.target.value` permet de récuperer la valeur d'un input
+    // 👆 Il fonctionne qu'avec les balises formulaires (input, select)
+    // event.target.classList.add('red') // ajoute la class `red` quand on entre une saissie
+    setTextEntered(event.target.value);
+  };
+
+  const addTaskHandler = function (event) {
+    // A ajouter pour TOUT formulaire utilisant une balise `form`
+    // Elle permet de ne pas recharger la page au submit
+    event.preventDefault();
+    // NE PAS UTILISER AINSI QUAND ON VEUT METTRE A JOUR UNE LISTE
+    // tasks.push(textEntered);
+
+    // La bonne méthode : utiliser le `spread operator` qui permet de copier
+    // une liste (tableau) puis ajouter le nouvelle tâche
+    const newArr = [...tasks, textEntered];
+    setTasks(newArr);
+
+    // Stock les taches dans le localstorage
+    localStorage.setItem('my-tasks', JSON.stringify(newArr));
+  };
+  console.log(tasks);
+
   return (
+    <main className="bg-slate-900 min-h-screen pt-5 px-10">
+      {/*       <h1 className="text-slate-50 text-3xl font-bold text-center mb-10">
+        TODO APP
+      </h1> */}
+      {/*  <img src={logo} alt="image" className="block mx-auto" /> */}
+      <img src='./images/image.png' alt="image" className="block mx-auto" />
 
-    <div> 
-     <h1 className='text-center uppercase text-white mt-4 mb-2 flex items-center justify-center '> characters <IoIosFlash /> </h1> 
-   
-    <div className='  grid gap-4 grid-cols-3 grid-rows-2'>
-   
-    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
-      <img className=" w-60 " src={gonImage}  />
-       <p className='font-bold text-left ml-4 pt-2'>Gon Freecss</p>
-       <p className='text-left text-xs ml-4 pt-2 pb-2'>A young and talented hunter with a pure heart.</p>
-       <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more<FaArrowRight /> </button>
-      
-    </div>
-    
-    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
-      <img className=" w-60 " src={killuaImage} alt="" />
-      <p className='font-bold text-left ml-4 pt-2'>illua Zoldyck</p>
-      <p className='text-left text-xs ml-4 pt-2 pb-2'>From an assassin's family, Gon's best friend.</p>
-      <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more<FaArrowRight /> </button>
+      {/* Input pour taper une tache */}
+      <form
+        onSubmit={addTaskHandler}
+        className="flex justify-center items-center gap-4">
+        <input
+          // A chaque saisi sur le input la fonction est rééxecuter
+          // Avec le paramétre `event` on peut accéder à l'élément `input`
+          // Donc à sa valeur `event.target.value`
+          onChange={onChangeHandler}
+          type="text"
+          className="w-full md:w-2/3"
+        />
+        <input
+          type="submit"
+          value="Add Task"
+          className="text-yellow-400 text-2xl"
+        />
+      </form>
 
-    </div>
-    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
-       <img className=" w-60 " src={kurapikaImage} alt="" />
-       <p className='font-bold text-left ml-4 pt-2'>Kurapicka</p>
-       <p className='text-left text-xs ml-4 pt-2 pb-2'>The last survivor of the Kurta clan, seeking to avenge his family.</p>
-       <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more <FaArrowRight /></button>
-
-    </div>
-    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
-      <img className=" w-60 " src={leorioImage} alt="" />
-      <p className='font-bold text-left ml-4 pt-2'>Leorio Paradinight</p>
-      <p className='text-left text-xs ml-4 pt-2 pb-2'>An aspiring doctor, he aims to help others.</p>
-      <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more<FaArrowRight /> </button>
-
-    </div>
-    <div className='ml-4 bg-slate-50 w-60 rounded-sm '>
-      <img className=" w-60 " src={hisokaImage} alt="" />
-      <p className='font-bold text-left ml-4 pt-2'>Hisoka morrow</p>
-      <p className='text-left text-xs ml-4 pt-2 pb-2'>A mysterious and dangerous magician with his own agenda.</p>
-      <button className='border-rounded-lg bg-blue-700 rounded-sm ml-4 text-white p-1 '>Read more <FaArrowRight /></button>
-
-    </div>
-    </div>
-    </div>
-  )
+      <section className="mt-10 md:w-2/3 mx-auto ">
+        <ul className="flex flex-col space-y-5">
+          {/* 
+          La méthode `map` va parcourrir le liste (tableau) et retourner (afficher) les éléments de la liste (tableau) dans le DOM
+          Elle attend une fonction en `callback` la fonction recevra
+          chaque élément du tableau via les paramétres
+          Donc dans notre exemple `item` représente chaque élément de la liste `tasks`
+          */}
+          {tasks.map((item, index) => (
+            /* 
+            La propriété `key` est utilisée pour identifier
+            chaque élément enfant générer par la méthode `map`
+            */
+            <TaskItem key={index} name={item}></TaskItem>
+          ))}
+        </ul>
+      </section>
+    </main>
+  );
 }
+
+/* 
+
+Créer un composant nommé `TaskItem` qui représente le UI de chaque `item`
+de la liste `tasks` 
+
+
+
+*/
+
+export default App;
